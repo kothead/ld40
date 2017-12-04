@@ -88,23 +88,23 @@ public class RenderSystem extends EntitySystem {
         mapRenderer.getBatch().end();
 
         // DEBUG
-        shapes.setColor(1f, 1f, 1f, 1f);
-        shapes.setProjectionMatrix(screen.getCamera().combined);
-        shapes.setAutoShapeType(true);
-        shapes.begin();
-        for (Entity entity: entities) {
-            Polygon polygon = Mappers.collisionBox.get(entity).polygon;
-            Vector2 position = Mappers.position.get(entity).position;
-            polygon = new Polygon(polygon.getVertices());
-            polygon.translate(position.x, position.y);
-            shapes.polygon(polygon.getTransformedVertices());
-
-            polygon = Mappers.collisionBox.get(entity).polygonDivide;
-            polygon = new Polygon(polygon.getVertices());
-            polygon.translate(position.x, position.y);
-            shapes.polygon(polygon.getTransformedVertices());
-        }
-        shapes.end();
+//        shapes.setColor(1f, 1f, 1f, 1f);
+//        shapes.setProjectionMatrix(screen.getCamera().combined);
+//        shapes.setAutoShapeType(true);
+//        shapes.begin();
+//        for (Entity entity: entities) {
+//            Polygon polygon = Mappers.collisionBox.get(entity).polygon;
+//            Vector2 position = Mappers.position.get(entity).position;
+//            polygon = new Polygon(polygon.getVertices());
+//            polygon.translate(position.x, position.y);
+//            shapes.polygon(polygon.getTransformedVertices());
+//
+//            polygon = Mappers.collisionBox.get(entity).polygonDivide;
+//            polygon = new Polygon(polygon.getVertices());
+//            polygon.translate(position.x, position.y);
+//            shapes.polygon(polygon.getTransformedVertices());
+//        }
+//        shapes.end();
     }
 
     private void moveCamera(float deltaTime) {
