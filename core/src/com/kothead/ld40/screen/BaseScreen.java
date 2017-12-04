@@ -1,6 +1,6 @@
 package com.kothead.ld40.screen;
 
-import com.badlogic.gdx.ScreenAdapter;
+import com.badlogic.gdx.*;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
@@ -21,6 +21,7 @@ public abstract class BaseScreen extends ScreenAdapter {
     private SpriteBatch batch;
     private ShapeRenderer shapes;
     private Stage stage;
+    private InputMultiplexer multiplexer;
 
     public BaseScreen(LD40Game game) {
         this.game = game;
@@ -31,6 +32,7 @@ public abstract class BaseScreen extends ScreenAdapter {
         batch = new SpriteBatch();
         stage = new Stage(viewport);
         shapes = new ShapeRenderer();
+        multiplexer = new InputMultiplexer();
     }
 
     protected abstract void layoutViewsLandscape(int width, int height);
@@ -74,6 +76,11 @@ public abstract class BaseScreen extends ScreenAdapter {
 
     public Viewport getViewport() {
         return viewport;
+    }
+
+    public void addInputProcessor(InputProcessor processor) {
+        multiplexer.addProcessor(processor);
+        Gdx.input.setInputProcessor(multiplexer);
     }
 
     private void updateGraphics(int width, int height) {

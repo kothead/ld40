@@ -38,14 +38,14 @@ ghost-walk
   size: 64, 64
   orig: 64, 64
   offset: 0, 0
-  index: 5
+  index: 1
 ghost-walk
   rotate: false
   xy: 2, 2
   size: 64, 64
   orig: 64, 64
   offset: 0, 0
-  index: 1
+  index: 5
 ghost-die
   rotate: false
   xy: 134, 70
@@ -242,6 +242,27 @@ ghost-die
   orig: 64, 64
   offset: 0, 0
   index: 14
+ghost-divide
+  rotate: false
+  xy: 2, 138
+  size: 128, 64
+  orig: 128, 64
+  offset: 0, 0
+  index: 10
+ghost-divide
+  rotate: false
+  xy: 2, 70
+  size: 128, 64
+  orig: 128, 64
+  offset: 0, 0
+  index: 11
+ghost-divide
+  rotate: false
+  xy: 134, 138
+  size: 128, 64
+  orig: 128, 64
+  offset: 0, 0
+  index: 12
 ghost-fly
   rotate: false
   xy: 538, 138
@@ -277,24 +298,3 @@ ghost-walk
   orig: 64, 64
   offset: 0, 0
   index: 6
-ghost_divide-10
-  rotate: false
-  xy: 2, 138
-  size: 128, 64
-  orig: 128, 64
-  offset: 0, 0
-  index: -1
-ghost_divide-11
-  rotate: false
-  xy: 2, 70
-  size: 128, 64
-  orig: 128, 64
-  offset: 0, 0
-  index: -1
-ghost_divide-12
-  rotate: false
-  xy: 134, 138
-  size: 128, 64
-  orig: 128, 64
-  offset: 0, 0
-  index: -1

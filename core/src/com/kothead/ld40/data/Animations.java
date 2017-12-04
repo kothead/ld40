@@ -10,28 +10,28 @@ import java.util.HashMap;
 import java.util.Map;
 
 import static com.badlogic.gdx.graphics.g2d.Animation.PlayMode.*;
-import static com.kothead.ld40.model.state.PlayerState.*;
+import static com.kothead.ld40.controller.state.PlayerState.*;
 
 public class Animations {
 
     private static final float BASE_ANIMATION_SPEED = 0.05f;
 
-    private Map<State<Entity>, Builder> builders = new HashMap<State<Entity>, Builder>() {{
-        put(GHOST_STAND, new Builder("ghost_stand").count(3).mode(LOOP_PINGPONG));
-        put(GHOST_WALK, new Builder("ghost_walk").count(6).mode(LOOP));
-        put(GHOST_JUMP, new Builder("ghost_jump").count(5).mode(NORMAL));
-        put(GHOST_FLY, new Builder("ghost_fly").count(2).mode(LOOP));
-        put(GHOST_DIVIDE, new Builder("ghost_divide").count(12).mode(NORMAL));
-        put(GHOST_DIE, new Builder("ghost_die").count(14).mode(NORMAL));
+    private static Map<State<Entity>, Builder> builders = new HashMap<State<Entity>, Builder>() {{
+        put(GHOST_STAND, new Builder("ghost-stand").count(3).mode(LOOP_PINGPONG));
+        put(GHOST_WALK, new Builder("ghost-walk").count(6).mode(LOOP));
+        put(GHOST_JUMP, new Builder("ghost-jump").count(5).mode(NORMAL));
+        put(GHOST_FLY, new Builder("ghost-fly").count(2).mode(LOOP));
+        put(GHOST_DIVIDE, new Builder("ghost-divide").count(12).mode(NORMAL));
+        put(GHOST_DIE, new Builder("ghost-die").count(14).mode(NORMAL));
     }};
 
-    private Map<Direction, Map<State<Entity>, Animation>> cache = new HashMap<Direction, Map<State<Entity>, Animation>>() {{
+    private static Map<Direction, Map<State<Entity>, Animation>> cache = new HashMap<Direction, Map<State<Entity>, Animation>>() {{
         put(Direction.LEFT, new HashMap<State<Entity>, Animation>());
         put(Direction.RIGHT, new HashMap<State<Entity>, Animation>());
     }};
 
-    public Animation get(State<Entity> state, Direction direction) {
-        Map<State<Entity>, Animation> cache = this.cache.get(direction);
+    public static Animation<TextureRegion> get(State<Entity> state, Direction direction) {
+        Map<State<Entity>, Animation> cache = Animations.cache.get(direction);
 
         if (!cache.containsKey(state)) {
             cache.put(state, builders.get(state).flip(direction).build());
@@ -78,7 +78,7 @@ public class Animations {
                 throw new IllegalArgumentException(String.format("Cannot flip in animation diagonal direction: %s", direction));
             }
 
-            flipx = direction.getDy() < 0;
+            flipx = direction.getDx() < 0;
             flipy = direction.getDy() < 0;
 
             return this;

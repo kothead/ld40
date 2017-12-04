@@ -7,6 +7,10 @@ public class SpriteComponent implements Component {
 
     public Sprite sprite;
 
+    public SpriteComponent() {
+        sprite = new Sprite();
+    }
+
     public SpriteComponent(Sprite sprite) {
         this.sprite = sprite;
     }

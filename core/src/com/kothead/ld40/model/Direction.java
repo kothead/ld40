@@ -1,6 +1,7 @@
 package com.kothead.ld40.model;
 
 import com.badlogic.gdx.math.MathUtils;
+import com.badlogic.gdx.math.Vector2;
 
 /**
  * Created by st on 12/7/14.
@@ -16,8 +17,8 @@ public enum Direction {
     private static final float SEGMENT_ANGLE = MathUtils.PI / 4f;
     private static Direction[] directions;
 
+    private Vector2 vector;
     private Direction opposite;
-    private int dx, dy;
 
     static {
         opposite(UP, DOWN);
@@ -46,8 +47,7 @@ public enum Direction {
     }
 
     Direction(int dx, int dy) {
-        this.dx = dx;
-        this.dy = dy;
+        vector = new Vector2(dx, dy);
     }
 
     public Direction getOpposite() {
@@ -60,15 +60,19 @@ public enum Direction {
         return directions[index];
     }
 
+    public Vector2 getVector() {
+        return vector;
+    }
+
     public int getDx() {
-        return dx;
+        return (int) vector.x;
     }
 
     public int getDy() {
-        return dy;
+        return (int) vector.y;
     }
 
     public boolean isOrthogonal() {
-        return dx == 0 || dy == 0;
+        return vector.x == 0 || vector.y == 0;
     }
 };

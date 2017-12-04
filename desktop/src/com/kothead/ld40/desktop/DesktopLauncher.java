@@ -40,7 +40,7 @@ public class DesktopLauncher {
 		settings.paddingY = 4;
 
 		for (File childDir: dir.listFiles(filter)) {
-			TexturePacker.process(settings, childDir.getPath(), "image", childDir.getName());
+			TexturePacker.process(settings, childDir.getPath(), "images", childDir.getName());
 		}
 	}
 }

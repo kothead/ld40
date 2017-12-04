@@ -15,6 +15,8 @@ public class LD40Game extends Game {
 
 	@Override
 	public void create () {
+		engine = new Engine();
+
 		Images.load();
 //		Skins.load();
 		Sounds.load();

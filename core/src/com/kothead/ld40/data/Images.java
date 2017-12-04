@@ -5,7 +5,7 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 
 public class Images {
     
-    private static final String DATA_DIR = "image/";
+    private static final String DATA_DIR = "images/";
     private static final String DATA_FILE = "pack.atlas";
     
     private static TextureAtlas atlas;
