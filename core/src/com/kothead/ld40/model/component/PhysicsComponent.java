@@ -4,6 +4,7 @@ import com.badlogic.ashley.core.Component;
 
 public class PhysicsComponent implements Component {
 
+    public float fallTime = 0.0f;
     public float standTime = 0.0f;
     public boolean isStanding = false;
     public boolean canDivide = false;

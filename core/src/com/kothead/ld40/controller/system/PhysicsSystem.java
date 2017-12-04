@@ -102,6 +102,8 @@ public class PhysicsSystem extends EntitySystem {
             if (isStanding) {
                 physics.isStanding = true;
                 physics.standTime = 0.0f;
+            } else {
+                physics.fallTime += deltaTime;
             }
         }
     }

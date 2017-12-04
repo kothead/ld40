@@ -10,6 +10,7 @@ import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.math.Vector2;
 import com.kothead.ld40.controller.EntityManager;
 import com.kothead.ld40.data.Mappers;
+import com.kothead.ld40.data.Sounds;
 import com.kothead.ld40.model.Direction;
 import com.kothead.ld40.model.component.AnimationComponent;
 import com.kothead.ld40.model.component.ControlComponent;
@@ -26,6 +27,8 @@ public enum PlayerState implements State<Entity> {
             ControlComponent control = Mappers.control.get(entity);
             PhysicsComponent physics = Mappers.physics.get(entity);
             StateMachine fsm = Mappers.fsm.get(entity).fsm;
+
+            physics.fallTime = 0.0f;
 
             if (control.jump) {
                 fsm.changeState(GHOST_JUMP);
@@ -47,12 +50,21 @@ public enum PlayerState implements State<Entity> {
 
     GHOST_WALK {
         @Override
+        public void enter(Entity entity) {
+            super.enter(entity);
+
+            Sounds.loop(Sounds.WALK);
+        }
+
+        @Override
         public void update(Entity entity) {
             super.update(entity);
 
             ControlComponent control = Mappers.control.get(entity);
             PhysicsComponent physics = Mappers.physics.get(entity);
             StateMachine fsm = Mappers.fsm.get(entity).fsm;
+
+            physics.fallTime = 0.0f;
 
             if (control.jump) {
                 fsm.changeState(GHOST_JUMP);
@@ -69,6 +81,13 @@ public enum PlayerState implements State<Entity> {
             } else if (control.die) {
                 fsm.changeState(GHOST_DIE);
             }
+        }
+
+        @Override
+        public void exit(Entity entity) {
+            super.exit(entity);
+
+            Sounds.stop(Sounds.WALK);
         }
     },
 
@@ -111,9 +130,26 @@ public enum PlayerState implements State<Entity> {
                 fsm.changeState(GHOST_STAND);
             }
         }
+
+        @Override
+        public void exit(Entity entity) {
+            super.exit(entity);
+
+            PhysicsComponent component = Mappers.physics.get(entity);
+            if (component.fallTime > 0.4f) {
+                Sounds.play(Sounds.FALL);
+                component.fallTime = 0.0f;
+            }
+        }
     },
 
     GHOST_DIVIDE {
+        @Override
+        public void enter(Entity entity) {
+            super.enter(entity);
+
+            Sounds.play(Sounds.DIVIDE);
+        }
 
         @Override
         public void update(Entity entity) {
@@ -137,6 +173,13 @@ public enum PlayerState implements State<Entity> {
     },
 
     GHOST_DIE {
+        @Override
+        public void enter(Entity entity) {
+            super.enter(entity);
+
+            Sounds.play(Sounds.DIE);
+        }
+
         @Override
         public void update(Entity entity) {
             super.update(entity);

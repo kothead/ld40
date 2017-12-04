@@ -7,6 +7,7 @@ import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.kothead.ld40.LD40Game;
 import com.kothead.ld40.controller.EntityManager;
+import com.kothead.ld40.data.Music;
 
 public class GameScreen extends BaseScreen {
 
@@ -23,6 +24,8 @@ public class GameScreen extends BaseScreen {
 
         manager = new EntityManager(this, map);
         manager.createPlayer(300.0f, 300.0f, true);
+
+        Music.play(Music.EERIE);
     }
 
     @Override
@@ -47,6 +50,7 @@ public class GameScreen extends BaseScreen {
 
     @Override
     public void dispose() {
+        Music.pause();
         map.dispose();
 
         super.dispose();

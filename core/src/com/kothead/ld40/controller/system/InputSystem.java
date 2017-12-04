@@ -21,7 +21,8 @@ public class InputSystem extends EntitySystem implements InputProcessor {
     private boolean left = false;
     private boolean right = false;
     private boolean jump = false;
-    private boolean divide = false;
+    private boolean divideRight = false;
+    private boolean divideLeft = false;
     private boolean die = false;
 
     public InputSystem() {
@@ -57,6 +58,14 @@ public class InputSystem extends EntitySystem implements InputProcessor {
                 control.direction = null;
             }
 
+            if (die && !divideLeft && !divideRight) {
+                velocity.x = 0.0f;
+                velocity.y = 0.0f;
+                control.die = true;
+                die = false;
+                return;
+            }
+
             if (Mappers.physics.get(entity).isStanding) {
                 if (jump) {
                     control.jump = true;
@@ -64,18 +73,17 @@ public class InputSystem extends EntitySystem implements InputProcessor {
                     jump = false;
                 }
 
-                if (divide && !die) {
+                if ((divideLeft || divideRight) && !die) {
                     velocity.x = 0.0f;
                     velocity.y = 0.0f;
+                    if (divideRight) {
+                        Mappers.direction.get(entity).direction = Direction.RIGHT;
+                    } else {
+                        Mappers.direction.get(entity).direction = Direction.LEFT;
+                    }
                     control.divide = true;
-                    divide = false;
-                }
-
-                if (die && !divide) {
-                    velocity.x = 0.0f;
-                    velocity.y = 0.0f;
-                    control.die = true;
-                    die = false;
+                    divideLeft = false;
+                    divideRight = false;
                 }
             }
         }
@@ -96,8 +104,12 @@ public class InputSystem extends EntitySystem implements InputProcessor {
                 jump = true;
                 return true;
 
-            case Input.Keys.S:
-                divide = true;
+            case Input.Keys.LEFT:
+                divideLeft = true;
+                return true;
+
+            case Input.Keys.RIGHT:
+                divideRight = true;
                 return true;
 
             case Input.Keys.SPACE:
@@ -122,8 +134,12 @@ public class InputSystem extends EntitySystem implements InputProcessor {
                 jump = false;
                 return true;
 
-            case Input.Keys.S:
-                divide = false;
+            case Input.Keys.RIGHT:
+                divideRight = false;
+                return true;
+
+            case Input.Keys.LEFT:
+                divideLeft = false;
                 return true;
 
             case Input.Keys.SPACE:
