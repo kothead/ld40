@@ -34,7 +34,7 @@ public class MovementSystem extends EntitySystem {
 
             if (Mappers.direction.has(entity)) {
                 DirectionComponent directionComponent = Mappers.direction.get(entity);
-                directionComponent.direction = velocity.x > 0
+                directionComponent.direction = velocity.x > 0f
                         ? Direction.RIGHT
                         : (velocity.x < 0
                         ? Direction.LEFT

@@ -22,7 +22,7 @@ public class GameScreen extends BaseScreen {
         map = new TmxMapLoader().load(PATH_TILEMAP);
 
         manager = new EntityManager(this, map);
-        manager.createPlayer();
+        manager.createPlayer(300.0f, 300.0f, true);
     }
 
     @Override

@@ -4,11 +4,14 @@ import com.badlogic.ashley.core.Entity;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.ai.fsm.State;
 import com.badlogic.gdx.ai.fsm.StateMachine;
+import com.badlogic.gdx.ai.msg.MessageManager;
 import com.badlogic.gdx.ai.msg.Telegram;
+import com.kothead.ld40.controller.EntityManager;
 import com.kothead.ld40.data.Mappers;
 import com.kothead.ld40.model.component.AnimationComponent;
 import com.kothead.ld40.model.component.ControlComponent;
 import com.kothead.ld40.model.component.PhysicsComponent;
+import com.kothead.ld40.model.component.PositionComponent;
 
 public enum PlayerState implements State<Entity> {
 
@@ -105,15 +108,12 @@ public enum PlayerState implements State<Entity> {
             super.update(entity);
 
             AnimationComponent animation = Mappers.animation.get(entity);
-            PhysicsComponent physics = Mappers.physics.get(entity);
             StateMachine fsm = Mappers.fsm.get(entity).fsm;
 
             if (animation.ended) {
-                if (physics.isStanding) {
-                    fsm.changeState(GHOST_STAND);
-                } else {
-                    fsm.changeState(GHOST_FLY);
-                }
+                MessageManager.getInstance().dispatchMessage(EntityManager.MESSAGE_ADD_PLAYER, entity);
+
+                fsm.changeState(GHOST_ARISE);
             }
         }
 
@@ -128,6 +128,31 @@ public enum PlayerState implements State<Entity> {
         @Override
         public void update(Entity entity) {
             super.update(entity);
+
+            AnimationComponent animation = Mappers.animation.get(entity);
+
+            if (animation.ended) {
+                MessageManager.getInstance().dispatchMessage(EntityManager.MESSAGE_DELETE_PLAYER, entity);
+            }
+        }
+    },
+
+    GHOST_ARISE {
+        @Override
+        public void update(Entity entity) {
+            super.update(entity);
+
+            AnimationComponent animation = Mappers.animation.get(entity);
+            PhysicsComponent physics = Mappers.physics.get(entity);
+            StateMachine fsm = Mappers.fsm.get(entity).fsm;
+
+            if (animation.ended) {
+                if (physics.isStanding) {
+                    fsm.changeState(GHOST_STAND);
+                } else {
+                    fsm.changeState(GHOST_FLY);
+                }
+            }
         }
     };
 

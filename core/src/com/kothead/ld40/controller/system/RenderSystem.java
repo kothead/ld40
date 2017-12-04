@@ -49,7 +49,7 @@ public class RenderSystem extends EntitySystem {
                 SpriteComponent.class,
                 PositionComponent.class)
                 .get());
-        humanEntities = engine.getEntitiesFor(Family.one(
+        humanEntities = engine.getEntitiesFor(Family.all(
                 PositionComponent.class,
                 SpriteComponent.class,
                 HumanControlComponent.class)

@@ -23,6 +23,7 @@ public class Animations {
         put(GHOST_FLY, new Builder("ghost-fly").count(2).mode(LOOP));
         put(GHOST_DIVIDE, new Builder("ghost-divide").count(12).mode(NORMAL));
         put(GHOST_DIE, new Builder("ghost-die").count(14).mode(NORMAL));
+        put(GHOST_ARISE, new Builder("ghost-arise").count(9).mode(NORMAL));
     }};
 
     private static Map<Direction, Map<State<Entity>, Animation>> cache = new HashMap<Direction, Map<State<Entity>, Animation>>() {{
