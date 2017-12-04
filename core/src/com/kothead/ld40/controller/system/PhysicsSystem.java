@@ -31,7 +31,7 @@ public class PhysicsSystem extends EntitySystem {
 
     private Array<Polygon> mapObjects;
     private ImmutableArray<Entity> entities;
-    private ImmutableArray<Entity> collisionBoxes;
+    private ImmutableArray<Entity> collisionEntities;
 
     public PhysicsSystem(TiledMap map) {
         super(SystemPriority.PHYSICS_SYSTEM);
@@ -49,7 +49,7 @@ public class PhysicsSystem extends EntitySystem {
     @Override
     public void addedToEngine(Engine engine) {
         entities = engine.getEntitiesFor(Family.all(PositionComponent.class, VelocityComponent.class, CollisionBoxComponent.class).get());
-        collisionBoxes = engine.getEntitiesFor(Family.all(PositionComponent.class, CollisionBoxComponent.class).get());
+        collisionEntities = engine.getEntitiesFor(Family.all(PositionComponent.class, CollisionBoxComponent.class).get());
     }
 
     @Override
@@ -77,6 +77,16 @@ public class PhysicsSystem extends EntitySystem {
             polygon1.translate(position.x, position.y);
 
             for (Polygon polygon2: mapObjects) {
+                isStanding |= handleContact(polygon1, polygon2, position, velocity, correction);
+            }
+
+            for (Entity collisionEntity: collisionEntities) {
+                if (entity == collisionEntity) continue;
+
+                Vector2 position2 = Mappers.position.get(collisionEntity).position;
+                Polygon polygon2 = Mappers.collisionBox.get(collisionEntity).polygon;
+                polygon2 = new Polygon(polygon2.getVertices());
+                polygon2.translate(position2.x, position2.y);
                 isStanding |= handleContact(polygon1, polygon2, position, velocity, correction);
             }
 

@@ -6,4 +6,5 @@ public class PhysicsComponent implements Component {
 
     public float standTime = 0.0f;
     public boolean isStanding = false;
+    public boolean canDivide = false;
 }
