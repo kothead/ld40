@@ -6,12 +6,16 @@ import com.badlogic.ashley.core.EntitySystem;
 import com.badlogic.ashley.core.Family;
 import com.badlogic.ashley.utils.ImmutableArray;
 import com.badlogic.gdx.graphics.g2d.Sprite;
+import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
+import com.badlogic.gdx.math.Polygon;
 import com.badlogic.gdx.math.Vector2;
 import com.kothead.ld40.controller.SystemPriority;
 import com.kothead.ld40.data.Mappers;
+import com.kothead.ld40.model.Direction;
+import com.kothead.ld40.model.component.CollisionBoxComponent;
 import com.kothead.ld40.model.component.HumanControlComponent;
 import com.kothead.ld40.model.component.PositionComponent;
 import com.kothead.ld40.model.component.SpriteComponent;
@@ -19,13 +23,14 @@ import com.kothead.ld40.screen.BaseScreen;
 
 public class RenderSystem extends EntitySystem {
 
-    private static final float MAX_CAMERA_SPEED = 100f;
+    private static final float MAX_CAMERA_SPEED = 500f;
 
     private BaseScreen screen;
     private ImmutableArray<Entity> entities;
     private ImmutableArray<Entity> humanEntities;
 
     private OrthogonalTiledMapRenderer mapRenderer;
+    private ShapeRenderer shapes;
 
     private float tileWidth, tileHeight;
     private float mapWidth, mapHeight;
@@ -35,6 +40,7 @@ public class RenderSystem extends EntitySystem {
         this.screen = screen;
 
         mapRenderer = new OrthogonalTiledMapRenderer(map, 1);
+        shapes = new ShapeRenderer();
 
         TiledMapTileLayer tileLayer = (TiledMapTileLayer) map.getLayers().get(0);
         tileWidth = tileLayer.getTileWidth();
@@ -68,11 +74,37 @@ public class RenderSystem extends EntitySystem {
             Vector2 position = Mappers.position.get(entity).position;
 
             Sprite sprite = Mappers.sprite.get(entity).sprite;
-            sprite.setPosition(position.x, position.y);
+
+            // dirty workaround. As always
+            if (sprite.getRegionWidth() > sprite.getRegionHeight()
+                    && Mappers.direction.get(entity).direction == Direction.LEFT) {
+                sprite.setPosition(position.x - sprite.getRegionHeight(), position.y);
+            } else {
+                sprite.setPosition(position.x, position.y);
+            }
 
             sprite.draw(mapRenderer.getBatch());
         }
         mapRenderer.getBatch().end();
+
+        // DEBUG
+        shapes.setColor(1f, 1f, 1f, 1f);
+        shapes.setProjectionMatrix(screen.getCamera().combined);
+        shapes.setAutoShapeType(true);
+        shapes.begin();
+        for (Entity entity: entities) {
+            Polygon polygon = Mappers.collisionBox.get(entity).polygon;
+            Vector2 position = Mappers.position.get(entity).position;
+            polygon = new Polygon(polygon.getVertices());
+            polygon.translate(position.x, position.y);
+            shapes.polygon(polygon.getTransformedVertices());
+
+            polygon = Mappers.collisionBox.get(entity).polygonDivide;
+            polygon = new Polygon(polygon.getVertices());
+            polygon.translate(position.x, position.y);
+            shapes.polygon(polygon.getTransformedVertices());
+        }
+        shapes.end();
     }
 
     private void moveCamera(float deltaTime) {

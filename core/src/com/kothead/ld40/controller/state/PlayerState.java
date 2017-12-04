@@ -6,8 +6,11 @@ import com.badlogic.gdx.ai.fsm.State;
 import com.badlogic.gdx.ai.fsm.StateMachine;
 import com.badlogic.gdx.ai.msg.MessageManager;
 import com.badlogic.gdx.ai.msg.Telegram;
+import com.badlogic.gdx.graphics.g2d.Sprite;
+import com.badlogic.gdx.math.Vector2;
 import com.kothead.ld40.controller.EntityManager;
 import com.kothead.ld40.data.Mappers;
+import com.kothead.ld40.model.Direction;
 import com.kothead.ld40.model.component.AnimationComponent;
 import com.kothead.ld40.model.component.ControlComponent;
 import com.kothead.ld40.model.component.PhysicsComponent;
@@ -31,7 +34,11 @@ public enum PlayerState implements State<Entity> {
             } else if (control.direction != null) {
                 fsm.changeState(GHOST_WALK);
             } else if (control.divide) {
-                fsm.changeState(GHOST_DIVIDE);
+                if (physics.canDivide) {
+                    fsm.changeState(GHOST_DIVIDE);
+                } else {
+                    control.divide = false;
+                }
             } else if (control.die) {
                 fsm.changeState(GHOST_DIE);
             }
@@ -54,7 +61,11 @@ public enum PlayerState implements State<Entity> {
             } else if (control.direction == null) {
                 fsm.changeState(GHOST_STAND);
             } else if (control.divide) {
-                fsm.changeState(GHOST_DIVIDE);
+                if (physics.canDivide) {
+                    fsm.changeState(GHOST_DIVIDE);
+                } else {
+                    control.divide = false;
+                }
             } else if (control.die) {
                 fsm.changeState(GHOST_DIE);
             }
@@ -103,6 +114,7 @@ public enum PlayerState implements State<Entity> {
     },
 
     GHOST_DIVIDE {
+
         @Override
         public void update(Entity entity) {
             super.update(entity);

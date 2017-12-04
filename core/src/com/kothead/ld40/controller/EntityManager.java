@@ -3,7 +3,6 @@ package com.kothead.ld40.controller;
 import com.badlogic.ashley.core.Engine;
 import com.badlogic.ashley.core.Entity;
 import com.badlogic.ashley.core.Family;
-import com.badlogic.gdx.ai.msg.MessageDispatcher;
 import com.badlogic.gdx.ai.msg.MessageManager;
 import com.badlogic.gdx.ai.msg.Telegram;
 import com.badlogic.gdx.ai.msg.Telegraph;
@@ -12,7 +11,6 @@ import com.badlogic.gdx.math.Vector2;
 import com.kothead.ld40.controller.state.PlayerState;
 import com.kothead.ld40.controller.system.*;
 import com.kothead.ld40.data.CollisionBoxes;
-import com.kothead.ld40.data.Configuration;
 import com.kothead.ld40.data.Mappers;
 import com.kothead.ld40.model.Direction;
 import com.kothead.ld40.model.component.*;
@@ -53,7 +51,7 @@ public class EntityManager implements Telegraph {
         entity.add(new PositionComponent(x, y));
         entity.add(new VelocityComponent());
         entity.add(new PhysicsComponent());
-        entity.add(new CollisionBoxComponent(CollisionBoxes.PLAYER));
+        entity.add(new CollisionBoxComponent());
         entity.add(new DirectionComponent());
         entity.add(new SpriteComponent());
         entity.add(new AnimationComponent());
@@ -96,7 +94,9 @@ public class EntityManager implements Telegraph {
                 Vector2 position = Mappers.position.get(entity).position;
                 Direction direction = Mappers.direction.get(entity).direction;
                 int width = (int) Mappers.sprite.get(entity).sprite.getWidth();
-                Entity newPlayer = createPlayer(position.x + width / 2f, position.y, false);
+                Entity newPlayer = createPlayer(position.x +
+                        (direction == Direction.RIGHT ? width / 2f : - width / 2f),
+                        position.y, false);
                 Mappers.direction.get(newPlayer).direction = direction;
                 return true;
 

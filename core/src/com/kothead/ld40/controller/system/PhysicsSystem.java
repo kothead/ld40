@@ -14,6 +14,7 @@ import com.badlogic.gdx.math.Polygon;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.Array;
 import com.kothead.ld40.controller.SystemPriority;
+import com.kothead.ld40.data.CollisionBoxes;
 import com.kothead.ld40.data.Mappers;
 import com.kothead.ld40.model.Direction;
 import com.kothead.ld40.model.component.CollisionBoxComponent;
@@ -56,6 +57,7 @@ public class PhysicsSystem extends EntitySystem {
     public void update(float deltaTime) {
         for (Entity entity: entities) {
             PhysicsComponent physics = Mappers.physics.get(entity);
+            physics.canDivide = true;
             if (physics.isStanding) {
                 physics.standTime += deltaTime;
                 if (physics.standTime > STAND_OFF_DELAY) {
@@ -72,22 +74,29 @@ public class PhysicsSystem extends EntitySystem {
 
             velocity.mulAdd(Direction.UP.getVector(), G * deltaTime);
 
-            Polygon polygon1 = Mappers.collisionBox.get(entity).polygon;
-            polygon1 = new Polygon(polygon1.getVertices());
-            polygon1.translate(position.x, position.y);
+            Polygon polygonDiv = Mappers.collisionBox.get(entity).polygonDivide;
+            polygonDiv = new Polygon(polygonDiv.getVertices());
+            polygonDiv.translate(position.x, position.y);
 
-            for (Polygon polygon2: mapObjects) {
-                isStanding |= handleContact(polygon1, polygon2, position, velocity, correction);
-            }
+            Polygon polygon1 = Mappers.collisionBox.get(entity).polygon;
+            polygon1 = new Polygon(polygon1.getTransformedVertices());
+            polygon1.translate(position.x, position.y);
 
             for (Entity collisionEntity: collisionEntities) {
                 if (entity == collisionEntity) continue;
 
                 Vector2 position2 = Mappers.position.get(collisionEntity).position;
                 Polygon polygon2 = Mappers.collisionBox.get(collisionEntity).polygon;
-                polygon2 = new Polygon(polygon2.getVertices());
+                polygon2 = new Polygon(polygon2.getTransformedVertices());
                 polygon2.translate(position2.x, position2.y);
                 isStanding |= handleContact(polygon1, polygon2, position, velocity, correction);
+
+                physics.canDivide &= !intersects(polygonDiv, polygon2);
+            }
+
+            for (Polygon polygon2: mapObjects) {
+                isStanding |= handleContact(polygon1, polygon2, position, velocity, correction);
+                physics.canDivide &= !intersects(polygonDiv, polygon2);
             }
 
             if (isStanding) {
@@ -136,5 +145,11 @@ public class PhysicsSystem extends EntitySystem {
         }
 
         return isStanding;
+    }
+
+    private boolean intersects(Polygon polygon1, Polygon polygon2) {
+        Intersector.MinimumTranslationVector vector = new Intersector.MinimumTranslationVector();
+        Intersector.overlapConvexPolygons(polygon1, polygon2, vector);
+        return vector.depth != 0;
     }
 }
