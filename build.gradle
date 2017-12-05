@@ -68,6 +68,7 @@ project(":android") {
         compile "com.badlogicgames.ashley:ashley:$ashleyVersion"
         compile "com.badlogicgames.gdx:gdx-controllers:$gdxVersion"
         compile "com.badlogicgames.gdx:gdx-controllers-android:$gdxVersion"
+        compile "com.badlogicgames.gdx:gdx-ai:1.8.0"
         
     }
 }
@@ -89,6 +90,7 @@ project(":html") {
         compile "com.github.czyzby:gdx-kiwi:1.9.1.9.6:sources"
         compile "com.github.czyzby:gdx-kiwi:1.9.1.9.6:sources"
         compile "com.github.czyzby:gdx-lml:1.9.1.9.6:sources"
+        compile "com.badlogicgames.gdx:gdx-ai:1.8.0:sources"
         
     }
 }

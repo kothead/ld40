@@ -6,11 +6,13 @@ import com.badlogic.ashley.core.Family;
 import com.badlogic.gdx.ai.msg.MessageManager;
 import com.badlogic.gdx.ai.msg.Telegram;
 import com.badlogic.gdx.ai.msg.Telegraph;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.math.Vector2;
 import com.kothead.ld40.controller.state.PlayerState;
 import com.kothead.ld40.controller.system.*;
 import com.kothead.ld40.data.CollisionBoxes;
+import com.kothead.ld40.data.Images;
 import com.kothead.ld40.data.Mappers;
 import com.kothead.ld40.model.Direction;
 import com.kothead.ld40.model.component.*;
@@ -21,8 +23,9 @@ public class EntityManager implements Telegraph {
 
     public static final int MESSAGE_DELETE_PLAYER = 101;
     public static final int MESSAGE_ADD_PLAYER = 102;
-    public static final int MESSAGE_SELECT_PLAYER = 103;
+    public static final int MESSAGE_WIN = 103;
 
+    private int count = 0;
     private BaseScreen screen;
     private TiledMap map;
 
@@ -35,6 +38,7 @@ public class EntityManager implements Telegraph {
         engine().addSystem(new PhysicsSystem(map));
         engine().addSystem(new AnimationSystem());
         engine().addSystem(new FSMSystem());
+        engine().addSystem(new EnemySystem());
 
         InputSystem system = new InputSystem();
         engine().addSystem(system);
@@ -43,7 +47,28 @@ public class EntityManager implements Telegraph {
         MessageManager.getInstance().addListeners(this,
                 MESSAGE_DELETE_PLAYER,
                 MESSAGE_ADD_PLAYER,
-                MESSAGE_SELECT_PLAYER);
+                MESSAGE_WIN);
+    }
+
+    public Entity createHand() {
+        Entity entity = new Entity();
+        entity.add(new PositionComponent(1280, 1280));
+        entity.add(new VelocityComponent());
+
+        CollisionBoxComponent collisionBoxComponent = new CollisionBoxComponent();
+        collisionBoxComponent.polygon = CollisionBoxes.HAND;
+        collisionBoxComponent.polygonDivide = CollisionBoxes.HAND;
+        entity.add(new CollisionBoxComponent());
+
+        SpriteComponent spriteComponent = new SpriteComponent();
+        TextureRegion region = Images.getTexture("hand");
+        spriteComponent.sprite.setRegion(region);
+        spriteComponent.sprite.setSize(region.getRegionWidth(), region.getRegionHeight());
+        entity.add(spriteComponent);
+
+        entity.add(new EnemyComponent());
+        engine().addEntity(entity);
+        return entity;
     }
 
     public Entity createPlayer(float x, float y, boolean isHuman) {
@@ -61,11 +86,21 @@ public class EntityManager implements Telegraph {
             entity.add(new HumanControlComponent());
         }
         engine().addEntity(entity);
+
+        count++;
+
         return entity;
     }
 
     public void update(float deltaTime) {
         engine().update(deltaTime);
+    }
+
+    public void dispose() {
+        MessageManager.getInstance().removeListener(this,
+                MESSAGE_DELETE_PLAYER,
+                MESSAGE_ADD_PLAYER,
+                MESSAGE_WIN);
     }
 
     private Engine engine() {
@@ -85,7 +120,7 @@ public class EntityManager implements Telegraph {
                 if (entity != null) {
                     entity.add(new HumanControlComponent());
                 } else {
-                    // TODO: message "Why?"
+                    screen.getGame().setMessageScreen("Why??");
                 }
                 return true;
 
@@ -100,15 +135,11 @@ public class EntityManager implements Telegraph {
                 Mappers.direction.get(newPlayer).direction = direction;
                 return true;
 
-            case MESSAGE_SELECT_PLAYER:
-                direction = (Direction) msg.extraInfo;
+            case MESSAGE_WIN:
+                screen.getGame().setWinScreen(count);
                 return true;
         }
 
         return false;
-    }
-
-    public Entity findPlayer(Entity human, Direction direction) {
-        return null;
     }
 }

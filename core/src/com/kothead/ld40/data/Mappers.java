@@ -14,4 +14,5 @@ public class Mappers {
     public static final ComponentMapper<AnimationComponent> animation = ComponentMapper.getFor(AnimationComponent.class);
     public static final ComponentMapper<CollisionBoxComponent> collisionBox = ComponentMapper.getFor(CollisionBoxComponent.class);
     public static final ComponentMapper<HumanControlComponent> humanControl = ComponentMapper.getFor(HumanControlComponent.class);
+    public static final ComponentMapper<EnemyComponent> enemy = ComponentMapper.getFor(EnemyComponent.class);
 }

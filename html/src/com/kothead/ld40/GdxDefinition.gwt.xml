@@ -6,6 +6,7 @@
 	<inherits name='com.badlogic.gdx.controllers.controllers-gwt' />
 	<inherits name='com.github.czyzby.kiwi.GdxKiwi' />
 	<inherits name='com.github.czyzby.lml.GdxLml' />
+	<inherits name='com.badlogic.gdx.ai' />
 
 	<inherits name='LD40Game' />
 	<entry-point class='com.kothead.ld40.client.HtmlLauncher' />

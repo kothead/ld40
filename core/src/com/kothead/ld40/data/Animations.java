@@ -76,7 +76,7 @@ public class Animations {
 
         public Builder flip(Direction direction) {
             if (!direction.isOrthogonal()) {
-                throw new IllegalArgumentException(String.format("Cannot flip in animation diagonal direction: %s", direction));
+                throw new IllegalArgumentException("Cannot flip in animation diagonal direction: " + direction);
             }
 
             flipx = direction.getDx() < 0;

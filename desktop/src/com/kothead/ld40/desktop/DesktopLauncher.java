@@ -12,12 +12,13 @@ import java.io.FileFilter;
 public class DesktopLauncher {
 
 	public static void main (String[] arg) {
-		packAssets();
+//		packAssets();
 		LwjglApplicationConfiguration config = new LwjglApplicationConfiguration();
-		config.resizable = false;
+//		config.resizable = false;
 		config.width = Configuration.GAME_HEIGHT;
 		config.height = Configuration.GAME_WIDTH;
 		config.samples = 8;
+		config.fullscreen = true;
 		new LwjglApplication(new LD40Game(), config);
 	}
 

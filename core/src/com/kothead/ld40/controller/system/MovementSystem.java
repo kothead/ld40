@@ -55,17 +55,19 @@ public class MovementSystem extends EntitySystem {
             position.x += velocity.x * deltaTime;
             position.y += velocity.y * deltaTime;
 
-            if (position.y < 58) {
-                velocity.y = 0;
-                position.y = 58;
-            }
+            if (Mappers.control.has(entity)) {
+                if (position.y < 58) {
+                    velocity.y = 0;
+                    position.y = 58;
+                }
 
-            if (position.x < 58) {
+                if (position.x < 58) {
+                    velocity.x = 0;
+                    position.x = 58;
+                }
+
                 velocity.x = 0;
-                position.x= 58;
             }
-
-            velocity.x = 0;
         }
     }
 }

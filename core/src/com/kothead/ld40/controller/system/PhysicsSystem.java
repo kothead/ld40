@@ -5,6 +5,7 @@ import com.badlogic.ashley.core.Entity;
 import com.badlogic.ashley.core.EntitySystem;
 import com.badlogic.ashley.core.Family;
 import com.badlogic.ashley.utils.ImmutableArray;
+import com.badlogic.gdx.ai.msg.MessageManager;
 import com.badlogic.gdx.maps.MapObject;
 import com.badlogic.gdx.maps.MapObjects;
 import com.badlogic.gdx.maps.objects.PolygonMapObject;
@@ -13,14 +14,12 @@ import com.badlogic.gdx.math.Intersector;
 import com.badlogic.gdx.math.Polygon;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.Array;
+import com.kothead.ld40.controller.EntityManager;
 import com.kothead.ld40.controller.SystemPriority;
 import com.kothead.ld40.data.CollisionBoxes;
 import com.kothead.ld40.data.Mappers;
 import com.kothead.ld40.model.Direction;
-import com.kothead.ld40.model.component.CollisionBoxComponent;
-import com.kothead.ld40.model.component.PhysicsComponent;
-import com.kothead.ld40.model.component.PositionComponent;
-import com.kothead.ld40.model.component.VelocityComponent;
+import com.kothead.ld40.model.component.*;
 
 // Collision resolution from https://www.defold.com/tutorials/runner/
 public class PhysicsSystem extends EntitySystem {
@@ -33,6 +32,7 @@ public class PhysicsSystem extends EntitySystem {
     private Array<Polygon> mapObjects;
     private ImmutableArray<Entity> entities;
     private ImmutableArray<Entity> collisionEntities;
+    private Polygon finish;
 
     public PhysicsSystem(TiledMap map) {
         super(SystemPriority.PHYSICS_SYSTEM);
@@ -45,11 +45,14 @@ public class PhysicsSystem extends EntitySystem {
                 mapObjects.add(polygonMapObject.getPolygon());
             }
         }
+
+        objects = map.getLayers().get("finish").getObjects();
+        finish = ((PolygonMapObject) objects.get(0)).getPolygon();
     }
 
     @Override
     public void addedToEngine(Engine engine) {
-        entities = engine.getEntitiesFor(Family.all(PositionComponent.class, VelocityComponent.class, CollisionBoxComponent.class).get());
+        entities = engine.getEntitiesFor(Family.all(ControlComponent.class, PositionComponent.class, VelocityComponent.class, CollisionBoxComponent.class).get());
         collisionEntities = engine.getEntitiesFor(Family.all(PositionComponent.class, CollisionBoxComponent.class).get());
     }
 
@@ -104,6 +107,10 @@ public class PhysicsSystem extends EntitySystem {
                 physics.standTime = 0.0f;
             } else {
                 physics.fallTime += deltaTime;
+            }
+
+            if (Mappers.humanControl.has(entity) && intersects(polygon1, finish)) {
+                MessageManager.getInstance().dispatchMessage(EntityManager.MESSAGE_WIN);
             }
         }
     }

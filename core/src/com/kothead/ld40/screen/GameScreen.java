@@ -23,7 +23,8 @@ public class GameScreen extends BaseScreen {
         map = new TmxMapLoader().load(PATH_TILEMAP);
 
         manager = new EntityManager(this, map);
-        manager.createPlayer(300.0f, 300.0f, true);
+        manager.createPlayer(100.0f, 300.0f, true);
+        manager.createHand();
 
         Music.play(Music.EERIE);
     }
@@ -52,6 +53,7 @@ public class GameScreen extends BaseScreen {
     public void dispose() {
         Music.pause();
         map.dispose();
+        manager.dispose();
 
         super.dispose();
     }

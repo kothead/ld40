@@ -1,13 +1,16 @@
 package com.kothead.ld40;
 
 import com.badlogic.ashley.core.Engine;
+import com.badlogic.ashley.core.EntitySystem;
+import com.badlogic.ashley.utils.ImmutableArray;
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.kothead.ld40.data.Images;
-import com.kothead.ld40.data.Skins;
 import com.kothead.ld40.data.Sounds;
 import com.kothead.ld40.screen.GameScreen;
+import com.kothead.ld40.screen.MessageScreen;
+import com.kothead.ld40.screen.WinScreen;
 
 public class LD40Game extends Game {
 
@@ -44,7 +47,21 @@ public class LD40Game extends Game {
 	}
 
 	public void setGameScreen() {
+		engine.removeAllEntities();
+		ImmutableArray<EntitySystem> systems = engine.getSystems();
+		for (EntitySystem system: systems) {
+			engine.removeSystem(system);
+		}
+
 		setScreen(new GameScreen(this));
+	}
+
+	public void setMessageScreen(String text) {
+		setScreen(new MessageScreen(this, text));
+	}
+
+	public void setWinScreen(int score) {
+		setScreen(new WinScreen(this, score));
 	}
 
 	public Engine getEngine() {

@@ -213,8 +213,6 @@ public enum PlayerState implements State<Entity> {
 
     @Override
     public void enter(Entity entity) {
-        Gdx.app.log("WAT", "enter " + this);
-
         AnimationComponent animation = Mappers.animation.get(entity);
         animation.ended = false;
         animation.time = 0.0f;
@@ -227,7 +225,6 @@ public enum PlayerState implements State<Entity> {
 
     @Override
     public void exit(Entity entity) {
-        Gdx.app.log("WAT", "exit " + this);
     }
 
     @Override

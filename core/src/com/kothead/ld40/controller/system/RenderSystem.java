@@ -76,7 +76,8 @@ public class RenderSystem extends EntitySystem {
             Sprite sprite = Mappers.sprite.get(entity).sprite;
 
             // dirty workaround. As always
-            if (sprite.getRegionWidth() > sprite.getRegionHeight()
+            if (Mappers.direction.has(entity)
+                    && sprite.getRegionWidth() > sprite.getRegionHeight()
                     && Mappers.direction.get(entity).direction == Direction.LEFT) {
                 sprite.setPosition(position.x - sprite.getRegionHeight(), position.y);
             } else {

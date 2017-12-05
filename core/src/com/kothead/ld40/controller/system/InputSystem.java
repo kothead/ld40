@@ -1,11 +1,15 @@
 package com.kothead.ld40.controller.system;
 
-import com.badlogic.ashley.core.*;
+import com.badlogic.ashley.core.Engine;
+import com.badlogic.ashley.core.Entity;
+import com.badlogic.ashley.core.EntitySystem;
+import com.badlogic.ashley.core.Family;
 import com.badlogic.ashley.utils.ImmutableArray;
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.InputProcessor;
+import com.badlogic.gdx.ai.msg.MessageManager;
 import com.badlogic.gdx.math.Vector2;
+import com.kothead.ld40.controller.EntityManager;
 import com.kothead.ld40.controller.SystemPriority;
 import com.kothead.ld40.data.Mappers;
 import com.kothead.ld40.model.Direction;
@@ -144,6 +148,10 @@ public class InputSystem extends EntitySystem implements InputProcessor {
 
             case Input.Keys.SPACE:
                 die = false;
+                return true;
+
+            case Input.Keys.U:
+                MessageManager.getInstance().dispatchMessage(EntityManager.MESSAGE_WIN);
                 return true;
         }
         return false;

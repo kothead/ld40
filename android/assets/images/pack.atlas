@@ -1,313 +1,320 @@
 
 pack.png
-size: 1024,256
+size: 1024,512
 format: RGBA8888
 filter: Nearest,Nearest
 repeat: none
+font
+  rotate: false
+  xy: 2, 138
+  size: 256, 128
+  orig: 256, 128
+  offset: 0, 0
+  index: -1
 ghost-arise
   rotate: false
-  xy: 2, 2
+  xy: 441, 311
   size: 64, 64
   orig: 64, 64
   offset: 0, 0
   index: 1
 ghost-die
   rotate: false
+  xy: 441, 311
+  size: 64, 64
+  orig: 64, 64
+  offset: 0, 0
+  index: 9
+ghost-divide
+  rotate: false
+  xy: 441, 311
+  size: 64, 64
+  orig: 64, 64
+  offset: 0, 0
+  index: 9
+ghost-arise
+  rotate: false
+  xy: 573, 379
+  size: 64, 64
+  orig: 64, 64
+  offset: 0, 0
+  index: 2
+ghost-die
+  rotate: false
+  xy: 573, 379
+  size: 64, 64
+  orig: 64, 64
+  offset: 0, 0
+  index: 8
+ghost-divide
+  rotate: false
+  xy: 573, 379
+  size: 64, 64
+  orig: 64, 64
+  offset: 0, 0
+  index: 8
+ghost-arise
+  rotate: false
   xy: 2, 2
   size: 64, 64
   orig: 64, 64
   offset: 0, 0
-  index: 9
+  index: 3
+ghost-die
+  rotate: false
+  xy: 2, 2
+  size: 64, 64
+  orig: 64, 64
+  offset: 0, 0
+  index: 7
 ghost-divide
   rotate: false
   xy: 2, 2
   size: 64, 64
   orig: 64, 64
   offset: 0, 0
-  index: 9
+  index: 7
 ghost-arise
   rotate: false
   xy: 134, 70
   size: 64, 64
   orig: 64, 64
   offset: 0, 0
-  index: 2
+  index: 4
 ghost-die
   rotate: false
   xy: 134, 70
   size: 64, 64
   orig: 64, 64
   offset: 0, 0
-  index: 8
+  index: 6
 ghost-divide
   rotate: false
   xy: 134, 70
   size: 64, 64
   orig: 64, 64
   offset: 0, 0
-  index: 8
-ghost-arise
-  rotate: false
-  xy: 266, 138
-  size: 64, 64
-  orig: 64, 64
-  offset: 0, 0
-  index: 3
-ghost-die
-  rotate: false
-  xy: 266, 138
-  size: 64, 64
-  orig: 64, 64
-  offset: 0, 0
-  index: 7
-ghost-divide
-  rotate: false
-  xy: 266, 138
-  size: 64, 64
-  orig: 64, 64
-  offset: 0, 0
-  index: 7
-ghost-arise
-  rotate: false
-  xy: 70, 2
-  size: 64, 64
-  orig: 64, 64
-  offset: 0, 0
-  index: 4
-ghost-die
-  rotate: false
-  xy: 70, 2
-  size: 64, 64
-  orig: 64, 64
-  offset: 0, 0
-  index: 6
-ghost-divide
-  rotate: false
-  xy: 70, 2
-  size: 64, 64
-  orig: 64, 64
-  offset: 0, 0
   index: 6
 ghost-arise
   rotate: false
-  xy: 202, 70
+  xy: 509, 311
   size: 64, 64
   orig: 64, 64
   offset: 0, 0
   index: 5
 ghost-die
   rotate: false
-  xy: 202, 70
+  xy: 509, 311
   size: 64, 64
   orig: 64, 64
   offset: 0, 0
   index: 5
 ghost-divide
   rotate: false
-  xy: 202, 70
+  xy: 509, 311
   size: 64, 64
   orig: 64, 64
   offset: 0, 0
   index: 5
 ghost-jump
   rotate: false
-  xy: 202, 70
+  xy: 509, 311
   size: 64, 64
   orig: 64, 64
   offset: 0, 0
   index: 5
 ghost-arise
   rotate: false
-  xy: 334, 138
+  xy: 641, 379
   size: 64, 64
   orig: 64, 64
   offset: 0, 0
   index: 6
 ghost-die
   rotate: false
-  xy: 334, 138
+  xy: 641, 379
   size: 64, 64
   orig: 64, 64
   offset: 0, 0
   index: 4
 ghost-divide
   rotate: false
-  xy: 334, 138
+  xy: 641, 379
   size: 64, 64
   orig: 64, 64
   offset: 0, 0
   index: 4
 ghost-jump
   rotate: false
-  xy: 334, 138
+  xy: 641, 379
   size: 64, 64
   orig: 64, 64
   offset: 0, 0
   index: 4
 ghost-arise
   rotate: false
-  xy: 138, 2
+  xy: 70, 2
   size: 64, 64
   orig: 64, 64
   offset: 0, 0
   index: 7
 ghost-die
   rotate: false
-  xy: 138, 2
+  xy: 70, 2
   size: 64, 64
   orig: 64, 64
   offset: 0, 0
   index: 3
 ghost-divide
   rotate: false
-  xy: 138, 2
+  xy: 70, 2
   size: 64, 64
   orig: 64, 64
   offset: 0, 0
   index: 3
 ghost-jump
   rotate: false
-  xy: 138, 2
+  xy: 70, 2
   size: 64, 64
   orig: 64, 64
   offset: 0, 0
   index: 3
 ghost-walk
   rotate: false
-  xy: 138, 2
+  xy: 70, 2
   size: 64, 64
   orig: 64, 64
   offset: 0, 0
   index: 3
 ghost-arise
   rotate: false
-  xy: 270, 70
+  xy: 577, 311
   size: 64, 64
   orig: 64, 64
   offset: 0, 0
   index: 8
 ghost-die
   rotate: false
-  xy: 270, 70
+  xy: 577, 311
   size: 64, 64
   orig: 64, 64
   offset: 0, 0
   index: 2
 ghost-divide
   rotate: false
-  xy: 270, 70
+  xy: 577, 311
   size: 64, 64
   orig: 64, 64
   offset: 0, 0
   index: 2
 ghost-jump
   rotate: false
-  xy: 270, 70
+  xy: 577, 311
   size: 64, 64
   orig: 64, 64
   offset: 0, 0
   index: 2
 ghost-walk
   rotate: false
-  xy: 270, 70
+  xy: 577, 311
   size: 64, 64
   orig: 64, 64
   offset: 0, 0
   index: 4
 ghost-walk
   rotate: false
-  xy: 270, 70
+  xy: 577, 311
   size: 64, 64
   orig: 64, 64
   offset: 0, 0
   index: 2
 ghost-arise
   rotate: false
-  xy: 402, 138
+  xy: 709, 379
   size: 64, 64
   orig: 64, 64
   offset: 0, 0
   index: 9
 ghost-die
   rotate: false
-  xy: 402, 138
+  xy: 709, 379
   size: 64, 64
   orig: 64, 64
   offset: 0, 0
   index: 1
 ghost-divide
   rotate: false
-  xy: 402, 138
+  xy: 709, 379
   size: 64, 64
   orig: 64, 64
   offset: 0, 0
   index: 1
 ghost-jump
   rotate: false
-  xy: 402, 138
+  xy: 709, 379
   size: 64, 64
   orig: 64, 64
   offset: 0, 0
   index: 1
 ghost-stand
   rotate: false
-  xy: 402, 138
+  xy: 709, 379
   size: 64, 64
   orig: 64, 64
   offset: 0, 0
   index: 1
 ghost-walk
   rotate: false
-  xy: 402, 138
+  xy: 709, 379
   size: 64, 64
   orig: 64, 64
   offset: 0, 0
   index: 5
 ghost-walk
   rotate: false
-  xy: 402, 138
+  xy: 709, 379
   size: 64, 64
   orig: 64, 64
   offset: 0, 0
   index: 1
 ghost-die
   rotate: false
-  xy: 206, 2
+  xy: 645, 311
   size: 64, 64
   orig: 64, 64
   offset: 0, 0
   index: 10
 ghost-die
   rotate: false
-  xy: 338, 70
+  xy: 777, 379
   size: 64, 64
   orig: 64, 64
   offset: 0, 0
   index: 11
 ghost-die
   rotate: false
-  xy: 470, 138
+  xy: 713, 311
   size: 64, 64
   orig: 64, 64
   offset: 0, 0
   index: 12
 ghost-die
   rotate: false
-  xy: 274, 2
+  xy: 845, 379
   size: 64, 64
   orig: 64, 64
   offset: 0, 0
   index: 13
 ghost-die
   rotate: false
-  xy: 406, 70
+  xy: 781, 311
   size: 64, 64
   orig: 64, 64
   offset: 0, 0
   index: 14
 ghost-divide
   rotate: false
-  xy: 2, 138
+  xy: 441, 379
   size: 128, 64
   orig: 128, 64
   offset: 0, 0
@@ -321,43 +328,50 @@ ghost-divide
   index: 11
 ghost-divide
   rotate: false
-  xy: 134, 138
+  xy: 262, 202
   size: 128, 64
   orig: 128, 64
   offset: 0, 0
   index: 12
 ghost-fly
   rotate: false
-  xy: 538, 138
+  xy: 913, 379
   size: 64, 64
   orig: 64, 64
   offset: 0, 0
   index: 1
 ghost-fly
   rotate: false
-  xy: 342, 2
+  xy: 849, 311
   size: 64, 64
   orig: 64, 64
   offset: 0, 0
   index: 2
 ghost-stand
   rotate: false
-  xy: 474, 70
+  xy: 262, 134
   size: 64, 64
   orig: 64, 64
   offset: 0, 0
   index: 2
 ghost-stand
   rotate: false
-  xy: 606, 138
+  xy: 138, 2
   size: 64, 64
   orig: 64, 64
   offset: 0, 0
   index: 3
 ghost-walk
   rotate: false
-  xy: 410, 2
+  xy: 917, 311
   size: 64, 64
   orig: 64, 64
   offset: 0, 0
   index: 6
+hand
+  rotate: false
+  xy: 2, 270
+  size: 435, 173
+  orig: 435, 173
+  offset: 0, 0
+  index: -1

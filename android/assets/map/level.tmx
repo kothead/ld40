@@ -41,7 +41,7 @@
    <polygon points="0,0 512,-1 511,-129 -1,-130"/>
   </object>
  </objectgroup>
- <imagelayer name="wall" offsetx="150" offsety="550">
+ <imagelayer name="wall" offsetx="91" offsety="550">
   <image source="wall.png" width="1000" height="630"/>
  </imagelayer>
 </map>
