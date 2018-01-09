@@ -8,14 +8,12 @@ import com.badlogic.ashley.utils.ImmutableArray;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.maps.tiled.TiledMap;
-import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
-import com.badlogic.gdx.math.Polygon;
 import com.badlogic.gdx.math.Vector2;
 import com.kothead.ld40.controller.SystemPriority;
 import com.kothead.ld40.data.Mappers;
 import com.kothead.ld40.model.Direction;
-import com.kothead.ld40.model.component.CollisionBoxComponent;
+import com.kothead.ld40.model.TiledMapInfo;
 import com.kothead.ld40.model.component.HumanControlComponent;
 import com.kothead.ld40.model.component.PositionComponent;
 import com.kothead.ld40.model.component.SpriteComponent;
@@ -31,9 +29,7 @@ public class RenderSystem extends EntitySystem {
 
     private OrthogonalTiledMapRenderer mapRenderer;
     private ShapeRenderer shapes;
-
-    private float tileWidth, tileHeight;
-    private float mapWidth, mapHeight;
+    private TiledMapInfo mapInfo;
 
     public RenderSystem(BaseScreen screen, TiledMap map) {
         super(SystemPriority.RENDER_SYSTEM);
@@ -41,12 +37,7 @@ public class RenderSystem extends EntitySystem {
 
         mapRenderer = new OrthogonalTiledMapRenderer(map, 1);
         shapes = new ShapeRenderer();
-
-        TiledMapTileLayer tileLayer = (TiledMapTileLayer) map.getLayers().get(0);
-        tileWidth = tileLayer.getTileWidth();
-        tileHeight = tileLayer.getTileHeight();
-        mapWidth = tileLayer.getWidth() * tileWidth;
-        mapHeight = tileLayer.getHeight() * tileHeight;
+        mapInfo = new TiledMapInfo(map);
     }
 
     @Override
@@ -122,14 +113,14 @@ public class RenderSystem extends EntitySystem {
 
         if (positionX < screen.getWorldWidth() / 2f) {
             positionX = screen.getWorldWidth() / 2f;
-        } else if (positionX > mapWidth - screen.getWorldWidth() / 2f ) {
-            positionX = mapWidth - screen.getWorldWidth() / 2f;
+        } else if (positionX > mapInfo.getMapWidth() - screen.getWorldWidth() / 2f ) {
+            positionX = mapInfo.getMapWidth() - screen.getWorldWidth() / 2f;
         }
 
         if (positionY < screen.getWorldHeight() / 2f) {
             positionY = screen.getWorldHeight() / 2f;
-        } else if (positionY > mapHeight - screen.getWorldHeight() / 2f) {
-            positionY = mapHeight - screen.getWorldHeight() / 2f;
+        } else if (positionY > mapInfo.getMapHeight() - screen.getWorldHeight() / 2f) {
+            positionY = mapInfo.getMapHeight() - screen.getWorldHeight() / 2f;
         }
 
         float maxCameraSpeed = MAX_CAMERA_SPEED * deltaTime;

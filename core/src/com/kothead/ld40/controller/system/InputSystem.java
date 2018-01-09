@@ -149,10 +149,6 @@ public class InputSystem extends EntitySystem implements InputProcessor {
             case Input.Keys.SPACE:
                 die = false;
                 return true;
-
-            case Input.Keys.U:
-                MessageManager.getInstance().dispatchMessage(EntityManager.MESSAGE_WIN);
-                return true;
         }
         return false;
     }

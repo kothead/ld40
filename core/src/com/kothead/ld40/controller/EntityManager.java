@@ -8,6 +8,7 @@ import com.badlogic.gdx.ai.msg.Telegram;
 import com.badlogic.gdx.ai.msg.Telegraph;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.maps.tiled.TiledMap;
+import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.kothead.ld40.controller.state.PlayerState;
 import com.kothead.ld40.controller.system.*;
@@ -15,6 +16,7 @@ import com.kothead.ld40.data.CollisionBoxes;
 import com.kothead.ld40.data.Images;
 import com.kothead.ld40.data.Mappers;
 import com.kothead.ld40.model.Direction;
+import com.kothead.ld40.model.TiledMapInfo;
 import com.kothead.ld40.model.component.*;
 import com.kothead.ld40.screen.BaseScreen;
 import com.kothead.ld40.util.EntityStateMachine;
@@ -33,7 +35,12 @@ public class EntityManager implements Telegraph {
         this.screen = screen;
         this.map = map;
 
-        engine().addSystem(new MovementSystem());
+        TiledMapInfo info = new TiledMapInfo(map);
+        Rectangle limits = new Rectangle(58, 58,
+                info.getMapWidth() - 180,
+                info.getMapHeight() - 180);
+
+        engine().addSystem(new MovementSystem(limits));
         engine().addSystem(new RenderSystem(screen, map));
         engine().addSystem(new PhysicsSystem(map));
         engine().addSystem(new AnimationSystem());

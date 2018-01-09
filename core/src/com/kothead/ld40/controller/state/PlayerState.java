@@ -125,8 +125,11 @@ public enum PlayerState implements State<Entity> {
 
             PhysicsComponent physics = Mappers.physics.get(entity);
             StateMachine fsm = Mappers.fsm.get(entity).fsm;
+            ControlComponent control = Mappers.control.get(entity);
 
-            if (physics.isStanding) {
+            if (control.die) {
+                fsm.changeState(GHOST_DIE);
+            } else if (physics.isStanding) {
                 fsm.changeState(GHOST_STAND);
             }
         }
